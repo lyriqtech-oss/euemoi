@@ -186,9 +186,10 @@ export default function PostEditor({ post = null }: PostEditorProps) {
       if (!post) {
         router.push(`/admin/publicacoes/editar/${saved.id}`);
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error("Erro ao salvar post:", err);
       setSaveStatus("idle");
+      alert(`Erro ao salvar post: ${err.message || JSON.stringify(err)}`);
     }
   };
 
