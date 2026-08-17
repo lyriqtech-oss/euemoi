@@ -198,13 +198,24 @@ export const db = {
       }
     }
     
+    let authorId = postData.author_id;
+    if (isSupabaseConfigured) {
+      if (!authorId || authorId === "author-1") {
+        authorId = "d7b21e84-18be-4054-9cf9-7e3e9d8b7244";
+      }
+    } else {
+      if (!authorId) {
+        authorId = "author-1";
+      }
+    }
+
     const postToSave: Post = {
       ...postData,
       id,
       created_at: postData.created_at || now,
       updated_at: now,
       published_at: postData.published_at || now,
-      author_id: postData.author_id || (isSupabaseConfigured ? "d7b21e84-18be-4054-9cf9-7e3e9d8b7244" : "author-1")
+      author_id: authorId
     };
 
     if (isSupabaseConfigured && supabase) {
