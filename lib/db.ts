@@ -187,7 +187,16 @@ export const db = {
     }
   ): Promise<Post> {
     const now = new Date().toISOString();
-    const id = postData.id || `post-${Date.now()}`;
+    let id = postData.id;
+    if (!id) {
+      if (isSupabaseConfigured) {
+        id = typeof crypto !== "undefined" && crypto.randomUUID
+          ? crypto.randomUUID()
+          : "00000000-0000-0000-0000-" + Math.random().toString(16).slice(2, 14).padStart(12, "0");
+      } else {
+        id = `post-${Date.now()}`;
+      }
+    }
     
     const postToSave: Post = {
       ...postData,
@@ -195,7 +204,7 @@ export const db = {
       created_at: postData.created_at || now,
       updated_at: now,
       published_at: postData.published_at || now,
-      author_id: postData.author_id || 'author-1'
+      author_id: postData.author_id || (isSupabaseConfigured ? "d7b21e84-18be-4054-9cf9-7e3e9d8b7244" : "author-1")
     };
 
     if (isSupabaseConfigured && supabase) {
