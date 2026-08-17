@@ -54,12 +54,12 @@ Atualmente, concilia a docência na educação básica com oficinas de escrita c
 };
 
 export const INITIAL_TAGS: Tag[] = [
-  { id: "tag-1", name: "tempo", slug: "tempo" },
-  { id: "tag-2", name: "saudade", slug: "saudade" },
-  { id: "tag-3", name: "cotidiano", slug: "cotidiano" },
-  { id: "tag-4", name: "infância", slug: "infancia" },
-  { id: "tag-5", name: "despedidas", slug: "despedidas" },
-  { id: "tag-6", name: "silêncio", slug: "silencio" }
+  { id: "e1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c61", name: "tempo", slug: "tempo" },
+  { id: "e1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c62", name: "saudade", slug: "saudade" },
+  { id: "e1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c63", name: "cotidiano", slug: "cotidiano" },
+  { id: "e1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c64", name: "infância", slug: "infancia" },
+  { id: "e1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c65", name: "despedidas", slug: "despedidas" },
+  { id: "e1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c66", name: "silêncio", slug: "silencio" }
 ];
 
 export const INITIAL_POSTS: Post[] = [

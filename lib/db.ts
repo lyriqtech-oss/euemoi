@@ -320,6 +320,18 @@ export const db = {
         .select('*')
         .order('name', { ascending: true });
       if (error) throw error;
+
+      if (data.length === 0) {
+        // Auto populate tags table in Supabase with our UUID formatted tags
+        const { data: newTags, error: createError } = await supabase
+          .from('tags')
+          .insert(INITIAL_TAGS)
+          .select();
+        if (createError) throw createError;
+        // Sort local array to keep order consistent
+        newTags.sort((a, b) => a.name.localeCompare(b.name));
+        return newTags as Tag[];
+      }
       return data as Tag[];
     } else {
       return getLSData<Tag[]>(LS_TAGS_KEY, INITIAL_TAGS);
@@ -327,7 +339,16 @@ export const db = {
   },
 
   async saveTag(tagData: Omit<Tag, 'id'> & { id?: string }): Promise<Tag> {
-    const id = tagData.id || `tag-${Date.now()}`;
+    let id = tagData.id;
+    if (!id) {
+      if (isSupabaseConfigured) {
+        id = typeof crypto !== "undefined" && crypto.randomUUID
+          ? crypto.randomUUID()
+          : "00000000-0000-0000-0000-" + Math.random().toString(16).slice(2, 14).padStart(12, "0");
+      } else {
+        id = `tag-${Date.now()}`;
+      }
+    }
     const tag: Tag = { ...tagData, id };
 
     if (isSupabaseConfigured && supabase) {
@@ -373,7 +394,15 @@ export const db = {
 
   async saveRevision(postId: string, content: string): Promise<void> {
     const now = new Date().toISOString();
-    const id = `revision-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    
+    let id = "";
+    if (isSupabaseConfigured) {
+      id = typeof crypto !== "undefined" && crypto.randomUUID
+        ? crypto.randomUUID()
+        : "00000000-0000-0000-0000-" + Math.random().toString(16).slice(2, 14).padStart(12, "0");
+    } else {
+      id = `revision-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    }
 
     if (isSupabaseConfigured && supabase) {
       await supabase
