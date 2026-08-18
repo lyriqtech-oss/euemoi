@@ -166,6 +166,15 @@ body {
   white-space: pre-wrap;
 }
 
+.poetry-content p:first-of-type::first-letter {
+  font-size: 3.5rem;
+  font-family: var(--font-serif);
+  color: var(--accent-red);
+  font-weight: 500;
+  line-height: 1;
+  vertical-align: baseline;
+}
+
 /* Animated Underlines */
 .link-underline {
   position: relative;
