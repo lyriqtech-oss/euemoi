@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  distDir: process.argv.includes('dev') ? '.next/dev' : '.next',
+  /* config options here */
 };
 
 export default nextConfig;
