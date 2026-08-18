@@ -85,7 +85,9 @@ export default function PostEditor({ post = null }: PostEditorProps) {
         setType(post.type);
         setExcerpt(post.excerpt);
         setStatus(post.status);
-        setPublishedAt(new Date(post.published_at).toISOString().slice(0, 16)); // YYYY-MM-DDTHH:MM
+        const pubDate = new Date(post.published_at);
+        pubDate.setMinutes(pubDate.getMinutes() - pubDate.getTimezoneOffset());
+        setPublishedAt(pubDate.toISOString().slice(0, 16));
         setFeatured(post.featured);
         setCoverImage(post.cover_image || "");
         setSelectedTags(post.tags || []);
