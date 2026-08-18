@@ -157,7 +157,7 @@ export default function TextoPage() {
             {post.type === "poesia" ? (
               // Specialized Poetry centering
               <div
-                className="poetry-content prose-literary"
+                className="poetry-content"
                 dangerouslySetInnerHTML={{ __html: post.content }}
               />
             ) : (
