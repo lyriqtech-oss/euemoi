@@ -1,0 +1,18 @@
+name: Supabase Keep-Alive
+
+on:
+  schedule:
+    # Executa a cada 3 dias às 06:00 UTC (03:00 horário de Brasília)
+    - cron: '0 6 */3 * *'
+  workflow_dispatch: # Permite disparar manualmente pelo GitHub
+
+jobs:
+  ping-supabase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase Database via API
+        run: |
+          curl -s -f -X GET "https://ttlwjgzfxvsfcitqvway.supabase.co/rest/v1/posts?select=id&limit=1" \
+            -H "apikey: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR0bHdqZ3pmeHZzZmNpdHF2d2F5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5ODk5MDAsImV4cCI6MjEwMjU2NTkwMH0.9SADa014WrNvhU15J8Vof-5waw0f6Vj8bV5-kSfTaFI' }}" \
+            -H "Authorization: Bearer ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR0bHdqZ3pmeHZzZmNpdHF2d2F5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY5ODk5MDAsImV4cCI6MjEwMjU2NTkwMH0.9SADa014WrNvhU15J8Vof-5waw0f6Vj8bV5-kSfTaFI' }}"
+          echo "Ping enviado ao Supabase com sucesso!"

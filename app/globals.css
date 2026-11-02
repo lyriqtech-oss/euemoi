@@ -3,31 +3,194 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+  /* Colors */
+  --background-paper: #FAF7F1;
+  --background-beige: #EDE3D3;
+  --background-beige-dark: #E5D5C1;
+  --background-beige-deep: #D9C6AC;
+  --accent-red: #7B2638;
+  --accent-red-hover: #6D2632;
+  --text-primary: #171512;
+  --text-muted: #7D6252;
+  --brown-light: #C1A58D;
+  --border-color: #D9C6AC;
+  
+  /* Fonts */
+  --font-serif: 'EB Garamond', serif;
+  --font-sans: 'Inter', sans-serif;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  color: var(--text-primary);
+  background-color: var(--background-paper);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
+  background-attachment: fixed;
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+/* Custom Text Selection */
+::selection {
+  background-color: rgba(123, 38, 56, 0.15);
+  color: var(--accent-red);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background-paper);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--background-beige-dark);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* TipTap Editor and Prose styles */
+.prose-literary {
+  font-family: var(--font-serif);
+  color: var(--text-primary);
+  line-height: 1.8;
+  font-size: 1.25rem;
+}
+
+.prose-literary p {
+  margin-bottom: 1.5rem;
+  text-align: justify;
+}
+
+@media (max-width: 640px) {
+  .prose-literary p {
+    text-align: left;
   }
+}
+
+.prose-literary p:first-of-type::first-letter {
+  font-size: 3.5rem;
+  float: left;
+  line-height: 0.8;
+  margin-top: 0.15rem;
+  margin-right: 0.5rem;
+  font-family: var(--font-serif);
+  color: var(--accent-red);
+  font-weight: 500;
+}
+
+.prose-literary blockquote {
+  font-style: italic;
+  border-left: 2px solid var(--accent-red);
+  padding-left: 1.5rem;
+  margin: 2rem 0;
+  color: var(--text-muted);
+}
+
+.prose-literary h2, 
+.prose-literary h3, 
+.prose-literary h4 {
+  font-family: var(--font-serif);
+  color: var(--accent-red);
+  font-weight: 500;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.prose-literary ul, 
+.prose-literary ol {
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.prose-literary ul {
+  list-style-type: disc;
+}
+
+.prose-literary ol {
+  list-style-type: decimal;
+}
+
+.prose-literary hr {
+  border: 0;
+  height: 1px;
+  background: var(--border-color);
+  margin: 3rem auto;
+  width: 40%;
+  text-align: center;
+}
+
+.prose-literary hr::after {
+  content: "♦";
+  display: inline-block;
+  position: relative;
+  top: -0.75rem;
+  padding: 0 0.5rem;
+  background: var(--background-paper);
+  color: var(--accent-red);
+  font-size: 0.75rem;
+}
+
+/* TipTap Editor Custom styles */
+.tiptap {
+  min-height: 350px;
+  outline: none;
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  line-height: 1.6;
+}
+
+.tiptap p.is-editor-empty:first-child::before {
+  color: #a8a29e;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+/* Poetry specific styling */
+.poetry-content {
+  font-family: var(--font-serif);
+  line-height: 2;
+  font-size: 1.25rem;
+  text-align: center;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.poetry-content p {
+  margin-bottom: 2rem;
+  text-align: center;
+  white-space: pre-wrap;
+}
+
+/* Animated Underlines */
+.link-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: var(--accent-red);
+  transform-origin: bottom right;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.link-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* Focus Mode Transitions */
+.focus-transition {
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
